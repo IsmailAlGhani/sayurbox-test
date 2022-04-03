@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { Col, Row } from 'antd';
+import React, { Fragment } from 'react';
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import DetailMedia from './Pages/DetailMedia';
+import ListMedia from './Pages/ListMedia';
+
+const Home = () => {
+  return (
+    <Fragment>
+      <Navigate to="/media" replace />
+      <Outlet />
+    </Fragment>
+  )
+}
+
+const MediaLayout = () => {
+  return (
+    <Row justify="center" style={{paddingTop: "4rem"}}>
+      <Col xs={22} sm={20} xl={18}>
+        <Outlet />
+      </Col>
+    </Row>
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />}>
+      </Route>
+      <Route path="/media" element={<MediaLayout />}>
+        <Route index element={<ListMedia />}/>
+        <Route path=":mediaId" element={<DetailMedia />} />
+      </Route>
+    </Routes>
   );
 }
 
